@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@google-cloud/firestore": "^5.0.2",
-    "@google-cloud/logging": "^9.6.7"
+    "@google-cloud/logging": "^9.6.7",
+    "faker": "^4.1.0"
   }
 }

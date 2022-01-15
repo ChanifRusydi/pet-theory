@@ -51,6 +51,10 @@ async function importCsv(csvFileName) {
     process.exit(1);
   }
   console.log(`Wrote ${records.length} records`);
+  // A text log entry
+  success_message = `Success: importTestData - Wrote ${records.length} records`
+  const entry = log.entry({resource: resource}, {message: `${success_message}`});
+  log.write([entry]);
 }
 
 importCsv(process.argv[2]).catch(e => console.error(e));

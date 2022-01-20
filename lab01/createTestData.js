@@ -1,5 +1,13 @@
 const fs = require('fs');
 const faker = require('faker');
+const {Logging } = require('@google-cloud/logging');
+
+const logName = 'pet-theory-logs-creeateTestData';
+const logging = new Logging();
+const log = logging.log(logName);
+const resource = {
+  type: 'global', // Viewer role on the entire project.
+}
 
 function getRandomCustomerEmail(firstName, lastName) {
   const provider = faker.internet.domainName();
@@ -21,6 +29,9 @@ async function createTestData(recordCount) {
     f.write(`${id},${name},${email},${phone}\n`);
   }
   console.log(`Created file ${fileName} containing ${recordCount} records.`);
+  const success_message = `Success: createTestData - Created file ${fileName} containing ${recordCount} records.`
+  const entry = log.entry({resource: resource}, {name: `${fileName}`, recordCount: `${recordCount}`, message: `${success_message}`});
+  log.write([entry]);
 }
 
 recordCount = parseInt(process.argv[2]);
